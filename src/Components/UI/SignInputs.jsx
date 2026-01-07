@@ -23,22 +23,17 @@ export default function SignInputs({ type, name, value, onChange, placeholder, c
         value={value}
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={() => setIsFocused(value ? true : false)}
         className={`border-2 border-black text-center w-full h-12 rounded-md shadow-sm transition duration-300 ease-in-out hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent ${className}`} 
         placeholder=" " 
       />
       <label
         onClick={handleLabelClick} 
-        className={`absolute top-6 transition-transform duration-500 ${isFocused || value ? '-translate-y-5 scale-75 top-2' : 'top-1/2 transform -translate-y-1/2 scale-100 cursor-pointer'}`}
+        className={`absolute top-1/2 transform -translate-y-1/2 cursor-pointer transition-opacity duration-300 ${isFocused || value ? 'opacity-0' : 'opacity-100'}`}
       >
         {placeholder}
       </label>
       <style>{`
         input:focus + label,
         input:not(:placeholder-shown) + label {
-          transform: translate(0px, -55px) scale(0.85);
-        }
-      `}</style>
-    </div>  
-  );
-}
+          opacity: 0;
