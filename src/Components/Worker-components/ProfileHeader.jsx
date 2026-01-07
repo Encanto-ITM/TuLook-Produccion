@@ -82,13 +82,13 @@ export function ProfileHeader() {
         )}
         <img
           className={`w-32 h-32 rounded-full mx-auto border border-gray-300 ${isProfileImageLoading ? 'hidden' : ''}`}
-          src={`${pre) => {
-            e.target.src = '/img/template-img.png';
-            setIsProfileImageLoading(false);
-          }}`}  
+          src={`${profileImage}?t=${new Date().getTime()}`}  
           alt={`${workerData.name} ${workerData.lastname}`}
           onLoad={() => setIsProfileImageLoading(false)}
-          onError={() => setIsProfileImageLoading(false)}
+          onError={(e) => {
+            e.target.src = '/img/template-img.png';
+            setIsProfileImageLoading(false);
+          }}
         />
         <h2 className="text-xl font-semibold mt-4">{workerData.name} {workerData.lastname}</h2>
         <p className="text-gray-500">{workerData.email}</p>

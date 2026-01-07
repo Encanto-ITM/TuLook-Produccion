@@ -33,7 +33,6 @@ export default function SignInputs({ type, name, value, onChange, placeholder, c
       >
         {placeholder}
       </label>
-      <style>{`
-        input:focus + label,
-        input:not(:placeholder-shown) + label {
-          opacity: 0;
+    </div>
+  );
+}

@@ -21,6 +21,7 @@ export function SignUpFormEm({ onToggleForm }) {
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [emailError, setEmailError] = useState(''); // Error específico para email
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -72,6 +73,7 @@ export function SignUpFormEm({ onToggleForm }) {
         e.preventDefault(); 
         setSubmitted(true); 
         setSuccessMessage(''); 
+        setEmailError(''); // Limpiar error de email previo
 
         const formErrors = validateForm(formData); 
         if (Object.keys(formErrors).length > 0) { 
@@ -90,14 +92,28 @@ export function SignUpFormEm({ onToggleForm }) {
             },
             body: JSON.stringify(formDataToSubmit), 
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 400) {
+                // Email already exists
+                return response.json().then(data => {
+                    setEmailError(data.message || 'El correo electrónico ya está registrado.');
+                    throw new Error('email_taken');
+                });
+            } else if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error al registrarse.');
+            }
+        })
         .then(data => {
             console.log('Éxito:', data); 
             setSuccessMessage('Registro exitoso. Iniciar Sesión.'); 
             resetForm();
         })
         .catch((error) => {
-            console.error('Error:', error); 
+            if (error.message !== 'email_taken') {
+                console.error('Error:', error);
+            }
         });
     };
 
@@ -156,6 +172,7 @@ export function SignUpFormEm({ onToggleForm }) {
                         onChange={handleChange} 
                     />
                     {submitted && errors.email && <p className="text-red text-sm">{errors.email}</p>}
+                    {emailError && <p className="text-red text-sm -mt-4">{emailError}</p>}
                     
                     <SignInputs 
                         placeholder="Número de contacto" 

@@ -4,7 +4,7 @@ import { SignUpFormEm } from '../Components/UI/SignUpFormEm';
 import { useLogin } from '../Components/hooks/useLogin';
 
 export default function Login() {
-    const { showSignIn, showSignUp } = useLogin();
+    const { showSignIn, showSignUp, toggleForm } = useLogin();
 
     return (
         <div className="relative bg-gray-200 min-h-screen flex items-center justify-center p-4 overflow-hidden">
@@ -12,19 +12,19 @@ export default function Login() {
                 
                 {showSignIn && (
                     <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                        <SignInForm />
+                        <SignInForm onToggleForm={toggleForm} />
                     </div>
                 )}
     
                 {showSignUp && (
                     <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                        <SignUpForm />
+                        <SignUpForm onToggleForm={toggleForm} />
                     </div>
                 )}
 
                 {!showSignIn && !showSignUp && (
                     <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                        <SignUpFormEm />
+                        <SignUpFormEm onToggleForm={toggleForm} />
                     </div>
                 )}
             </div>

@@ -16,6 +16,7 @@ export function SignUpForm({ onToggleForm }) {
     const [submitted, setSubmitted] = useState(false);
     const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseñas
     const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Estado para mostrar/ocultar confirmación de contraseña
+    const [emailError, setEmailError] = useState(''); // Error específico para email
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,7 +48,7 @@ export function SignUpForm({ onToggleForm }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setSubmitted(true);
+        setEmailError(''); // Limpiar error de email previo
 
         const formErrors = validateForm(formData);
         setErrors(formErrors);
@@ -58,8 +59,6 @@ export function SignUpForm({ onToggleForm }) {
 
         const { password_confirmation, ...formDataToSubmit } = formData;
 
-        console.log('Datos del formulario antes de enviar:', formDataToSubmit);
-
         fetch('https://tulookapiv2.vercel.app/api/api/auth/register', {
             method: 'POST',
             headers: {
@@ -68,7 +67,14 @@ export function SignUpForm({ onToggleForm }) {
             body: JSON.stringify(formDataToSubmit),
         })
         .then(response => {
-            if (response.ok) {
+            console.log('Response status:', response);
+            if (!response.ok) {
+                // Email already exists
+                return response.json().then(data => {
+                    setEmailError(data.message || 'El correo electrónico ya está registrado.');
+                    throw new Error('email_taken');
+                });
+            } else if (response.ok) {
                 return response.json();
             } else {
                 throw new Error('Error al registrarse.');
@@ -79,6 +85,9 @@ export function SignUpForm({ onToggleForm }) {
             onToggleForm();
         })
         .catch((error) => {
+            if (error.message !== 'email_taken') {
+                console.error('Error:', error);
+            }
             console.error('Error:', error);
         });
     };
@@ -119,6 +128,7 @@ export function SignUpForm({ onToggleForm }) {
                         onChange={handleChange} 
                         error={errors.email}
                     />
+                    {emailError && <p className="text-red text-sm -mt-4">{emailError}</p>}
                     <div className="relative flex flex-col">
                         <SignInputs 
                             placeholder="Contraseña" 
