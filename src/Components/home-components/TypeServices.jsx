@@ -43,7 +43,14 @@ export function TypeServices() {
                         onClick={() => handleServiceClick(service.id, service.name)} 
                         className="w-16 h-16 rounded-full flex items-center justify-cente cursor-pointer"
                     >
-                        <img src={img[index]} alt={service.name} className="w-full h-full object-contain" />
+                        <img 
+                            src={img[index]} 
+                            alt={service.name} 
+                            className="w-full h-full object-contain"
+                            onError={(e) => {
+                                e.target.src = '/img/template-img.png';
+                            }}
+                        />
                     </div>
                     <span className="text-center">{service.name}</span>
                 </div>

@@ -98,7 +98,14 @@ export default function UserProfile({ open, onClose }) {
                             
                             <div className='flex flex-col items-center text-center'>
                                 <div className="w-32 h-32 bg-gray-300 flex items-center justify-center rounded-full border-2 border-gray-300 overflow-hidden">
-                                    <img className="w-full h-full object-cover" src={userData.profilephoto || '/img/Death Note.jpg'} alt={`${userData.name} ${userData.lastname}`} />
+                                    <img 
+                                        className="w-full h-full object-cover" 
+                                        src={userData.profilephoto || '/img/Death Note.jpg'} 
+                                        alt={`${userData.name} ${userData.lastname}`}
+                                        onError={(e) => {
+                                            e.target.src = '/img/template-img.png';
+                                        }}
+                                    />
                                 </div>
                                 <h2 className="text-2xl font-bold mt-4">{userData.name} {userData.lastname}</h2>
                                 <div className='flex items-center text-center gap-4'>

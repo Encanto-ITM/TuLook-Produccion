@@ -195,7 +195,10 @@ export function Nav() {
                 className={`object-cover w-full h-full ${isImageLoading ? 'hidden' : ''}`}
                 alt="Foto de perfil"
                 onLoad={() => setIsImageLoading(false)} 
-                onError={() => setIsImageLoading(false)} 
+                onError={(e) => {
+                  e.target.src = '/img/template-img.png';
+                  setIsImageLoading(false);
+                }}
               />
             </div>
           </a>

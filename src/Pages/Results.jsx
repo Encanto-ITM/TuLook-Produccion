@@ -116,6 +116,9 @@ export function Results(service) {
                                     src={`${service.image}`}
                                     alt={`Image of ${service.name}`}
                                     className="w-full h-48 object-cover rounded-t-md"
+                                    onError={(e) => {
+                                        e.target.src = '/img/template-img.png';
+                                    }}
                                 />
                                 <div className='p-4'>
                                     <h2 className="text-xl font-semibold mt-2">{service.name}</h2>

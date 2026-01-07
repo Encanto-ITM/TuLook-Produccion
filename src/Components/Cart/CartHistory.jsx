@@ -100,6 +100,9 @@ export function CartHistory() {
                                                 src={service.image || '/img/placeholder.jpg'}
                                                 alt={`Imagen de ${service.name}`}
                                                 className="w-full h-48 object-cover rounded-t-lg "
+                                                onError={(e) => {
+                                                    e.target.src = '/img/template-img.png';
+                                                }}
                                             />
                                             <div className='p-4'>
                                                 <h2 className="text-xl font-semibold mt-2">{service.name}</h2>

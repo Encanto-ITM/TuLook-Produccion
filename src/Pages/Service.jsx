@@ -109,6 +109,9 @@ export function Service() {
                                 src={serviceData.image || '/img/Death Note.jpg'}
                                 alt={serviceData.name}
                                 className="w-full h-[20rem] object-cover rounded-lg"
+                                onError={(e) => {
+                                    e.target.src = '/img/template-img.png';
+                                }}
                             />
                         </div>
 

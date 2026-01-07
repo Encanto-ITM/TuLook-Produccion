@@ -81,6 +81,9 @@ export function PopularWorkers({ workers }) {
                                         src={worker.profilephoto || `https://picsum.photos/seed/${worker.id}/800/800`}
                                         alt={`${worker.name} ${worker.lastname}`}
                                         className="w-full h-48 object-cover"
+                                        onError={(e) => {
+                                            e.target.src = '/img/template-img.png';
+                                        }}
                                     />
                                     <div className='p-8'>
                                         <h2 className="text-xl font-semibold text-left text-gray-700 overflow-hidden whitespace-nowrap text-ellipsis max-h-6">

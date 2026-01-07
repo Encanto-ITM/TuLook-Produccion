@@ -65,7 +65,10 @@ export function ProfileHeader() {
         src={`${headerImage}?t=${new Date().getTime()}`} 
         alt="header photo"
         onLoad={() => setIsHeaderImageLoading(false)}
-        onError={() => setIsHeaderImageLoading(false)}
+        onError={(e) => {
+          e.target.src = '/img/template-img.png';
+          setIsHeaderImageLoading(false);
+        }}
       />
 
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-md text-center w-80 h-72">
@@ -79,7 +82,10 @@ export function ProfileHeader() {
         )}
         <img
           className={`w-32 h-32 rounded-full mx-auto border border-gray-300 ${isProfileImageLoading ? 'hidden' : ''}`}
-          src={`${profileImage}?t=${new Date().getTime()}`}  
+          src={`${pre) => {
+            e.target.src = '/img/template-img.png';
+            setIsProfileImageLoading(false);
+          }}`}  
           alt={`${workerData.name} ${workerData.lastname}`}
           onLoad={() => setIsProfileImageLoading(false)}
           onError={() => setIsProfileImageLoading(false)}

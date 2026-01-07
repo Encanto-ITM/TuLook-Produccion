@@ -141,6 +141,9 @@ export function EditService({ serviceData, isOpen, onClose, onUpdate }) {
                                         src={serviceImagePreview}
                                         alt="Previsualización de Imagen del Servicio"
                                         className="w-full h-auto rounded-md"
+                                        onError={(e) => {
+                                            e.target.src = '/img/template-img.png';
+                                        }}
                                     />
                                 </div>
                             )}

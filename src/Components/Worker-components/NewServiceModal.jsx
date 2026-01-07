@@ -166,6 +166,9 @@ export default function NewServiceModal({ open, onClose, worker}) {
                     src={serviceImagePreview}
                     alt="Previsualización del Servicio"
                     className="mt-2 w-full h-auto rounded-lg"
+                    onError={(e) => {
+                        e.target.src = '/img/template-img.png';
+                    }}
                   />
                 )}
               </div>
